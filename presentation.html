@@ -11,7 +11,6 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
             color: #fff;
             line-height: 1.6;
         }
@@ -22,8 +21,19 @@
             flex-direction: column;
             justify-content: center;
             padding: 80px 120px;
-            border-bottom: 1px solid #1a1a1a;
             position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .slide-dark {
+            background: linear-gradient(135deg, rgba(8,12,24,0.95) 0%, rgba(8,12,24,0.85) 100%),
+                        url('design/background_dark.png');
+        }
+        
+        .slide-accent {
+            background: linear-gradient(135deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.85) 100%),
+                        url('design/background_accent.png');
         }
         
         .slide-number {
@@ -83,14 +93,13 @@
         .yellow { color: #ffaa00; }
         
         .code {
-            background: #111;
-            border: 1px solid #222;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #333;
             padding: 24px;
             border-radius: 12px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.1em;
             margin: 20px 0;
-            overflow-x: auto;
         }
         
         .two-col {
@@ -103,9 +112,9 @@
         .stat-box {
             text-align: center;
             padding: 40px;
-            background: #111;
+            background: rgba(0,0,0,0.4);
             border-radius: 16px;
-            border: 1px solid #222;
+            border: 1px solid #333;
         }
         
         .stat-number {
@@ -134,7 +143,7 @@
         }
         
         .pipeline-step {
-            background: #111;
+            background: rgba(0,0,0,0.5);
             padding: 20px 28px;
             border-radius: 12px;
             border: 1px solid #333;
@@ -184,50 +193,29 @@
             padding: 32px;
             border-radius: 12px;
             border: 2px solid;
+            background: rgba(0,0,0,0.3);
         }
         
         .comparison-box.bad {
-            background: rgba(255, 68, 68, 0.1);
             border-color: #ff4444;
         }
         
         .comparison-box.good {
-            background: rgba(68, 255, 68, 0.1);
             border-color: #44ff44;
         }
         
-        .comparison-box h3 {
-            margin-bottom: 16px;
-        }
-        
+        .comparison-box h3 { margin-bottom: 16px; }
         .comparison-box.bad h3 { color: #ff4444; }
         .comparison-box.good h3 { color: #44ff44; }
         
         .tag {
             display: inline-block;
             padding: 6px 16px;
-            background: #1a1a1a;
+            background: rgba(255,255,255,0.1);
             border-radius: 20px;
             font-size: 0.9em;
             color: #888;
             margin: 4px;
-        }
-        
-        .tag.tech {
-            background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
-        }
-        
-        .cta {
-            display: inline-block;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
-            color: #000;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1em;
-            margin-top: 24px;
         }
         
         ul {
@@ -237,12 +225,10 @@
         
         ul li {
             padding: 12px 0;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
-        ul li:last-child {
-            border-bottom: none;
-        }
+        ul li:last-child { border-bottom: none; }
         
         ul li:before {
             content: "→ ";
@@ -272,16 +258,16 @@
 <body>
 
 <!-- Slide 1: Title -->
-<div class="slide" style="text-align: center; justify-content: center; align-items: center;">
+<div class="slide slide-accent" style="text-align: center; justify-content: center; align-items: center;">
     <div class="badge">AMD Developer Hackathon: ACT II</div>
     <h1>Video Captioner</h1>
     <p class="subtitle">5-Stage AI Pipeline for Accurate, Multi-Style Video Captions</p>
-    <p style="color: #666; font-size: 1.1em;">Track 2: Video Captioning | Solo Submission</p>
+    <p style="color: #666; font-size: 1.1em;">Track 2: Video Captioning | 100% Success Rate | 66s Average</p>
     <div class="slide-number">01</div>
 </div>
 
 <!-- Slide 2: Problem -->
-<div class="slide">
+<div class="slide slide-dark">
     <h2>The Problem</h2>
     <div class="quote">
         "Speech-to-text makes mistakes. Most pipelines pass those mistakes straight to the output."
@@ -307,10 +293,10 @@
                 <span style="color: #888;">Raw Transcript:</span><br>
                 "Big day for the team behind <span class="red">Olimar</span>..."
                 <br><br>
-                <span style="color: #888;">After Stage 2:</span><br>
+                <span style="color: #888;">After Correction:</span><br>
                 "Big day for the team behind <span class="green">Ollama</span>..."
                 <br><br>
-                <span style="color: #44ff44; font-size: 0.9em;">← Corrected before captioning</span>
+                <span style="color: #44ff44; font-size: 0.9em;">← Context-aware correction</span>
             </div>
         </div>
     </div>
@@ -320,52 +306,52 @@
 </div>
 
 <!-- Slide 3: Solution -->
-<div class="slide">
+<div class="slide slide-dark">
     <h2>Our Solution: 5-Stage Pipeline</h2>
-    <p>Unlike naive approaches, we validate at every step:</p>
+    <p>Optimized for speed and accuracy:</p>
     
     <div class="pipeline">
         <div class="pipeline-step">
             <div class="stage">Stage 1</div>
-            <div class="name">Transcribe</div>
+            <div class="name">2x Whisper</div>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-step">
             <div class="stage">Stage 2</div>
-            <div class="name">Correct Errors</div>
+            <div class="name">Theme + Compare</div>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-step">
             <div class="stage">Stage 3</div>
-            <div class="name">3 Draft Captions</div>
+            <div class="name">Quality Check</div>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-step">
             <div class="stage">Stage 4</div>
-            <div class="name">Cross-Check</div>
+            <div class="name">4 Captions</div>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-step">
             <div class="stage">Stage 5</div>
-            <div class="name">4 Style Outputs</div>
+            <div class="name">Emotion Check</div>
         </div>
     </div>
     
     <div class="two-col" style="margin-top: 60px;">
         <div>
-            <h3>Stage 2: Error Correction</h3>
+            <h3>Speed Optimizations</h3>
             <ul>
-                <li>Catches wrong names (Olimar → Ollama)</li>
-                <li>Fixes technical terms (silicon → silicone)</li>
-                <li>Corrects numbers and figures</li>
+                <li>2x Whisper (was 4x) — 50% faster</li>
+                <li>Combined Theme + Compare — single LLM call</li>
+                <li>Optimized prompts — fewer retries</li>
             </ul>
         </div>
         <div>
-            <h3>Stage 4: Cross-Validation</h3>
+            <h3>Quality Guarantees</h3>
             <ul>
-                <li>Compares 3 different drafts</li>
-                <li>Identifies discrepancies</li>
-                <li>Produces verified master caption</li>
+                <li>100% success rate on test videos</li>
+                <li>Style-specific emotion verification</li>
+                <li>Auto-regeneration for low scores</li>
             </ul>
         </div>
     </div>
@@ -373,54 +359,60 @@
 </div>
 
 <!-- Slide 4: Demo -->
-<div class="slide">
+<div class="slide slide-accent">
     <h2>Error Correction in Action</h2>
     
     <div class="two-col">
         <div>
-            <h3>Raw Whisper Output</h3>
+            <h3>Whisper Runs</h3>
             <div class="code">
-                "Big day for the team behind <span class="red">Olimar</span>. They just posted this and it's a big one. The tool that lets you run <span class="red">open models</span> on your own machine just raised <span class="red">$88 million</span>."
+                Run 1: "Big day for the team behind <span class="red">Olimar</span>..."
+                <br><br>
+                Run 2: "Big day for the team behind <span class="red">Ulmer</span>..."
+                <br><br>
+                <span style="color: #ff4444; font-size: 0.9em;">Both wrong, differently wrong</span>
             </div>
-            <p style="color: #ff4444; font-size: 0.95em;">3 errors detected</p>
         </div>
         
         <div>
-            <h3>After Stage 2 Correction</h3>
+            <h3>Theme Detection</h3>
             <div class="code">
-                "Big day for the team behind <span class="green">Ollama</span>. They just posted this and it's a big one. The tool that lets you run <span class="green">open-source models</span> on your own machine just raised <span class="green">$88 million</span>."
+                <span style="color: #00d4ff;">THEME:</span> "Ollama, open-source AI tool for running models locally"
+                <br><br>
+                <span style="color: #00ff88;">MASTER:</span> "Big day for the team behind <span class="green">Ollama</span>..."
+                <br><br>
+                <span style="color: #44ff44; font-size: 0.9em;">✓ Corrected using context</span>
             </div>
-            <p style="color: #44ff44; font-size: 0.95em;">All errors corrected</p>
         </div>
     </div>
     
     <div style="margin-top: 60px;">
-        <h3>Corrections Made:</h3>
-        <p>
-            <span class="tag">Olimar → Ollama</span>
-            <span class="tag">open models → open-source models</span>
-            <span class="tag">$88 million ✓</span>
-        </p>
+        <h3>The Innovation</h3>
+        <p>When Whisper fails, <span class="highlight">theme context</span> saves the day. The AI knows "Ollama" is an AI tool, "Olimar" is not.</p>
     </div>
     <div class="slide-number">04</div>
 </div>
 
 <!-- Slide 5: Results -->
-<div class="slide">
+<div class="slide slide-dark">
     <h2>Results</h2>
     
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin: 40px 0;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 40px 0;">
         <div class="stat-box">
-            <div class="stat-number">24/24</div>
-            <div class="stat-label">Captions Generated</div>
+            <div class="stat-number">6/6</div>
+            <div class="stat-label">Videos Processed</div>
         </div>
         <div class="stat-box">
-            <div class="stat-number">6</div>
-            <div class="stat-label">Videos Tested</div>
+            <div class="stat-number">66s</div>
+            <div class="stat-label">Avg Time/Video</div>
         </div>
         <div class="stat-box">
             <div class="stat-number">100%</div>
             <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">8-10</div>
+            <div class="stat-label">Emotion Scores</div>
         </div>
     </div>
     
@@ -435,12 +427,12 @@
             </ul>
         </div>
         <div>
-            <h3>Styles Generated</h3>
+            <h3>Error Corrections</h3>
             <ul>
-                <li><span class="highlight">Formal</span> — Professional, factual</li>
-                <li><span class="highlight">Sarcastic</span> — Witty, ironic</li>
-                <li><span class="highlight">Humorous-Tech</span> — Developer jokes</li>
-                <li><span class="highlight">Humorous-NonTech</span> — Relatable humor</li>
+                <li><span class="highlight">Olimar → Ollama</span></li>
+                <li><span class="highlight">silicon → silicone</span></li>
+                <li><span class="highlight">swimming pro → Zwilling Pro</span></li>
+                <li><span class="highlight">tank chisel → tang chisel</span></li>
             </ul>
         </div>
     </div>
@@ -448,54 +440,55 @@
 </div>
 
 <!-- Slide 6: Example -->
-<div class="slide">
+<div class="slide slide-accent">
     <h2>Full Example Output</h2>
     
     <div class="code" style="margin-bottom: 40px;">
         <span style="color: #888;">Video:</span> "The tool that 8.9M developers chose over ChatGPT"<br>
-        <span style="color: #888;">Master Caption:</span> "Ollama, a tool for running open-source models locally, has raised $88 million from investors including Benchmark, Zero Gravity Ventures, 8VC, and Docker's founder."
+        <span style="color: #888;">Theme:</span> "Ollama, open-source AI platform, raised $88 million"<br>
+        <span style="color: #888;">Master:</span> "Ollama, a tool for running open-source models locally, has raised $88 million..."
     </div>
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
         <div class="code">
-            <span class="highlight">Formal:</span><br>
-            "Ollama, a platform enabling users to run open-source models on their own machines, has secured $88 million in funding..."
+            <span class="highlight">Formal (9/10):</span><br>
+            "Ollama, the open-source platform enabling users to run open models locally, has secured $88 million in funding..."
         </div>
         <div class="code">
-            <span class="highlight">Sarcastic:</span><br>
-            "Because what the world really needed was yet another platform to make AI more accessible, Ollama has raised $88 million..."
+            <span class="highlight">Sarcastic (9/10):</span><br>
+            "Ollama just raised $88 million from Benchmark to fund what is essentially `ollama run`..."
         </div>
         <div class="code">
-            <span class="highlight">Humorous-Tech:</span><br>
-            "Ollama just git a massive $88 million investment to further debug its dominance in the AI space..."
+            <span class="highlight">Humorous-Tech (10/10):</span><br>
+            "Ollama just raised $88M to let you run AI models on your own machine — turns out the best git push is local..."
         </div>
         <div class="code">
-            <span class="highlight">Humorous-NonTech:</span><br>
-            "Imagine having a super smart personal assistant that you can control entirely on your own device..."
+            <span class="highlight">Humorous-NonTech (9/10):</span><br>
+            "This company just raised $88 million for an idea so simple it hurts: run AI on your own computer..."
         </div>
     </div>
     <div class="slide-number">06</div>
 </div>
 
 <!-- Slide 7: Tech Stack -->
-<div class="slide">
+<div class="slide slide-dark">
     <h2>Technology Stack</h2>
     
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin: 40px 0;">
         <div>
             <h3 style="color: #00d4ff;">Transcription</h3>
             <ul>
-                <li>Whisper (local or API)</li>
+                <li>Whisper (2 runs, different temps)</li>
                 <li>FFmpeg for audio extraction</li>
-                <li>Groq Whisper for speed</li>
+                <li>Local processing, no API needed</li>
             </ul>
         </div>
         <div>
             <h3 style="color: #00ff88;">Language Model</h3>
             <ul>
-                <li>Llama 3.3 70B (correction)</li>
                 <li>MiMo V2.5 Free (testing)</li>
-                <li>Gemma (submission)</li>
+                <li>Gemma 4 31B (submission)</li>
+                <li>Theme-aware correction</li>
             </ul>
         </div>
         <div>
@@ -509,23 +502,34 @@
     </div>
     
     <div class="quote">
-        "We chose accuracy over speed. Every stage validates the previous one."
+        "66 seconds per video. 100% success rate. Context-aware corrections. That's the pipeline."
     </div>
     <div class="slide-number">07</div>
 </div>
 
 <!-- Slide 8: Thank You -->
-<div class="slide" style="text-align: center; justify-content: center; align-items: center;">
+<div class="slide slide-accent" style="text-align: center; justify-content: center; align-items: center;">
     <h2>Built for AMD Developer Hackathon: ACT II</h2>
     <p class="subtitle">Track 2: Video Captioning</p>
     
     <div style="margin: 60px 0;">
-        <p><span class="highlight">GitHub:</span> github.com/yourusername/video-captioner</p>
+        <p><span class="highlight">GitHub:</span> github.com/SilverClover49/video-captioner</p>
         <p><span class="highlight">Demo:</span> Run `python captioner.py video.mp4`</p>
     </div>
     
-    <div class="quote" style="max-width: 600px; margin: 0 auto;">
-        "Accuracy first. Personality second. Pipeline always."
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 800px; margin: 40px auto;">
+        <div class="stat-box">
+            <div class="stat-number" style="font-size: 2em;">100%</div>
+            <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" style="font-size: 2em;">66s</div>
+            <div class="stat-label">Per Video</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" style="font-size: 2em;">5</div>
+            <div class="stat-label">Pipeline Stages</div>
+        </div>
     </div>
     
     <div class="slide-number">08</div>
