@@ -47,42 +47,27 @@ client = OpenAI(api_key=config["api_key"], base_url=config["base_url"])
 # ============================================================
 
 STYLE_PROMPTS = {
-    "formal": """Rewrite this as a formal, professional caption.
-Rules:
-- Factual and concise
-- No humor or slang
-- Preserve all key facts and numbers exactly
-- Max 2 sentences
+    "formal": """Rewrite this master caption as a formal, professional caption.
+
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content in formal tone.
 
 Master caption: {caption}""",
 
-    "sarcastic": """Rewrite this as a sarcastic, witty caption.
-Rules:
-- Use dry humor and ironic observations
-- Mock the subject playfully
-- Include one exaggerated comparison
-- Keep facts accurate
-- Max 2 sentences
+    "sarcastic": """Rewrite this master caption as a sarcastic, witty caption.
+
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content with sarcastic tone.
 
 Master caption: {caption}""",
 
-    "humorous_tech": """Rewrite this as a humorous caption for developers.
-Rules:
-- Include programming jokes or tech puns
-- Reference coding concepts (git, debug, production, etc.)
-- Keep it relatable to engineers
-- Preserve original meaning
-- Max 2 sentences
+    "humorous_tech": """Rewrite this master caption as a humorous caption for developers.
+
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content with tech humor.
 
 Master caption: {caption}""",
 
-    "humorous_nontech": """Rewrite this as a funny caption for anyone.
-Rules:
-- No technical jargon
-- Use everyday analogies
-- Make it shareable
-- Keep core message intact
-- Max 2 sentences
+    "humorous_nontech": """Rewrite this master caption as a funny caption for anyone.
+
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content with everyday humor.
 
 Master caption: {caption}""",
 }
@@ -110,7 +95,7 @@ def call_llm(system_prompt: str, user_prompt: str, temperature: float = 0.3) -> 
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                max_tokens=1000,
+                max_tokens=1500,
                 temperature=temperature,
             )
             content = response.choices[0].message.content
