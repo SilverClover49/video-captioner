@@ -8,7 +8,15 @@ from openai import OpenAI
 
 load_dotenv()
 
-PROVIDER = os.getenv("PROVIDER", "groq")
+# Auto-detect provider: if FIREWORKS_API_KEY is set, use fireworks
+if os.getenv("FIREWORKS_API_KEY"):
+    PROVIDER = "fireworks"
+elif os.getenv("GROQ_API_KEY"):
+    PROVIDER = "groq"
+elif os.getenv("ZEN_API_KEY"):
+    PROVIDER = "zen"
+else:
+    PROVIDER = os.getenv("PROVIDER", "fireworks")
 
 PROVIDER_CONFIG = {
     "groq": {
