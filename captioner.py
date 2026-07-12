@@ -362,8 +362,8 @@ if __name__ == "__main__":
     
     result = process_video(video_file)
     
-    # Save output to output/ folder
-    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
+    # Save output to output/ folder (in current working directory)
+    output_dir = os.path.join(os.getcwd(), "output")
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, "output.json")
     
