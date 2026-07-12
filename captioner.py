@@ -259,8 +259,10 @@ def stage4_generate_captions(master: str) -> dict:
 # STAGE 5: EMOTION CHECK (style-specific)
 # ============================================================
 
-def stage5_emotion_check(captions: dict) -> dict:
+def stage5_emotion_check(captions: dict) -> tuple:
     print("\n[STAGE 5] Emotion & tone verification...")
+    
+    scores = {}
     
     # Style-specific criteria
     criteria = {
@@ -290,6 +292,7 @@ Output ONLY a number (1-10). Nothing else.""",
             score = 5
         
         print(f"  {style}: {score}/10")
+        scores[style] = score
         
         # If score < 8, regenerate
         if score < 8:
@@ -309,7 +312,7 @@ Rules:
                 captions[style] = new_caption
                 print(f"    Improved: {new_caption[:80]}...")
     
-    return captions
+    return captions, scores
 
 # ============================================================
 # MAIN PIPELINE
@@ -336,7 +339,7 @@ def process_video(video_path: str) -> dict:
     captions = stage4_generate_captions(master)
     
     # Stage 5: Emotion check
-    captions = stage5_emotion_check(captions)
+    captions, emotion_scores = stage5_emotion_check(captions)
     
     elapsed = round(time.time() - start, 1)
     print(f"\n  Completed in {elapsed}s")
@@ -347,7 +350,8 @@ def process_video(video_path: str) -> dict:
         "theme": theme,
         "transcripts": transcripts,
         "master_caption": master,
-        "captions": captions
+        "captions": captions,
+        "emotion_scores": emotion_scores
     }
 
 if __name__ == "__main__":

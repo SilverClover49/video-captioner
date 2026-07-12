@@ -29,8 +29,8 @@ Video → 2x Whisper → Theme+Compare → Quality Check → 4 Captions → Emot
 | Metric | Value |
 |--------|-------|
 | Success Rate | **100% (6/6 videos)** |
-| Processing Time | **66s average** |
-| Caption Quality | **140-154% of master** (full content preservation) |
+| Processing Time | **60-100s average** (varies by video) |
+| Caption Quality | **91-150% of master** (full content preservation) |
 | Emotion Scores | **8-10/10** (style-specific verification) |
 
 ### Example: Ollama Funding Video

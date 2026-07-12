@@ -6,5 +6,5 @@ output.json
 tests/*.json
 test-videos/
 output/
-design/
-docs/
+convert_to_pdf.py
+presentation.pdf
