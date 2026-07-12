@@ -49,25 +49,33 @@ client = OpenAI(api_key=config["api_key"], base_url=config["base_url"])
 STYLE_PROMPTS = {
     "formal": """Rewrite this master caption as a formal, professional caption.
 
-CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content in formal tone.
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details.
+The output MUST be approximately the same length as the input. Include EVERY piece of information from the original.
+Rewrite the ENTIRE content in formal tone.
 
 Master caption: {caption}""",
 
     "sarcastic": """Rewrite this master caption as a sarcastic, witty caption.
 
-CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content with sarcastic tone.
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details.
+The output MUST be approximately the same length as the input. Include EVERY piece of information from the original.
+Rewrite the ENTIRE content with sarcastic tone.
 
 Master caption: {caption}""",
 
     "humorous_tech": """Rewrite this master caption as a humorous caption for developers.
 
-CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content with tech humor.
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details.
+The output MUST be approximately the same length as the input. Include EVERY piece of information from the original.
+Rewrite the ENTIRE content with tech humor.
 
 Master caption: {caption}""",
 
     "humorous_nontech": """Rewrite this master caption as a funny caption for anyone.
 
-CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details. Rewrite the ENTIRE content with everyday humor.
+CRITICAL: Preserve ALL information from the master caption. Do not summarize or omit any facts, numbers, names, or details.
+The output MUST be approximately the same length as the input. Include EVERY piece of information from the original.
+Rewrite the ENTIRE content with everyday humor.
 
 Master caption: {caption}""",
 }
@@ -161,8 +169,9 @@ def stage2_theme_and_compare(transcripts: list) -> tuple:
 
 2. CREATE MASTER TRANSCRIPT: Combine the 2 transcripts into one clean version.
    - Where they agree, use that text
-   - Where they disagree, pick the most accurate version
-   - Fix any obvious errors
+   - Where they disagree, prefer the version that fits the detected THEME
+   - If one transcript has a name/entity error (e.g., "Olimar" vs "Ollama"), correct it based on THEME context
+   - Preserve ALL details, numbers, and names from both transcripts
 
 Output format:
 THEME: <what the video is about>
@@ -199,13 +208,16 @@ def stage3_quality_check(master: str, theme: str) -> str:
         return master
     
     checked = call_llm(
-        system_prompt=f"""Fix any errors in this transcript. 
+        system_prompt=f"""Fix ONLY clear errors in this transcript.
 Video theme: {theme}
 
 Rules:
-- Fix grammar errors
-- Fix wrong words/names
-- Keep the original meaning
+- Fix grammar errors (subject-verb agreement, tenses)
+- Fix wrong words/names (e.g., "Olimar" → "Ollama")
+- Fix obvious typos
+- DO NOT rephrase or rewrite sentences that are already correct
+- DO NOT change the writing style or tone
+- Keep the EXACT original wording wherever possible
 - Output ONLY the corrected transcript""",
         user_prompt=master,
         temperature=0.1
@@ -265,11 +277,8 @@ def stage5_emotion_check(captions: dict) -> dict:
         review = call_llm(
             system_prompt=f"""Rate this caption for TONE MATCH (1-10).
 Required tone: {crit}
-
-Caption: {caption}
-
 Output ONLY a number (1-10). Nothing else.""",
-            user_prompt="",
+            user_prompt=f"Caption: {caption}",
             temperature=0.1
         )
         
@@ -286,9 +295,13 @@ Output ONLY a number (1-10). Nothing else.""",
         if score < 6:
             print(f"    Regenerating {style}...")
             new_caption = call_llm(
-                system_prompt=f"""Rewrite this caption to better match the tone: {crit}
+                system_prompt=f"""Rewrite this caption to EXACTLY match this tone: {crit}
 
-Output ONLY the improved caption.""",
+Rules:
+- Keep ALL factual information from the original
+- Change ONLY the wording, tone, and style
+- Do NOT change the length drastically
+- Output ONLY the improved caption""",
                 user_prompt=caption,
                 temperature=0.8
             )
