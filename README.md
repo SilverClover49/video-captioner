@@ -89,6 +89,12 @@ docker build -t video-captioner .
 docker run --env-file .env -v $(pwd)/videos:/videos video-captioner /videos/video.mp4
 ```
 
+Or pull from GitHub Container Registry:
+```bash
+docker pull ghcr.io/silverclover49/video-captioner:latest
+docker run --env-file .env -v $(pwd)/videos:/videos ghcr.io/silverclover49/video-captioner:latest /videos/video.mp4
+```
+
 ---
 
 ## API Providers
