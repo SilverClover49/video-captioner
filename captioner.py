@@ -291,8 +291,8 @@ Output ONLY a number (1-10). Nothing else.""",
         
         print(f"  {style}: {score}/10")
         
-        # If score < 6, regenerate
-        if score < 6:
+        # If score < 8, regenerate
+        if score < 8:
             print(f"    Regenerating {style}...")
             new_caption = call_llm(
                 system_prompt=f"""Rewrite this caption to EXACTLY match this tone: {crit}
