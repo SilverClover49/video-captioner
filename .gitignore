@@ -8,3 +8,6 @@ test-videos/
 output/
 convert_to_pdf.py
 presentation.pdf
+design/create_backgrounds.py
+design/philosophy.md
+docs/
