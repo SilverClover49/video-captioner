@@ -37,6 +37,12 @@ PROVIDER_CONFIG = {
         "llm_model": os.getenv("ZEN_MODEL", "mimo-v2.5-free"),
         "stt_model": None,
     },
+    "google": {
+        "api_key": os.getenv("GOOGLE_API_KEY"),
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "llm_model": os.getenv("GOOGLE_MODEL", "gemini-2.0-flash"),
+        "stt_model": None,
+    },
 }
 
 config = PROVIDER_CONFIG[PROVIDER]
@@ -97,16 +103,23 @@ def extract_audio(video_path: str, audio_path: str = "temp_audio.wav"):
 def call_llm(system_prompt: str, user_prompt: str, temperature: float = 0.3) -> str:
     for attempt in range(3):
         try:
-            response = client.chat.completions.create(
-                model=config["llm_model"],
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                max_tokens=1500,
-                temperature=temperature,
-            )
-            content = response.choices[0].message.content
+            if PROVIDER == "google":
+                import google.generativeai as genai
+                genai.configure(api_key=config["api_key"])
+                model = genai.GenerativeModel(config["llm_model"])
+                response = model.generate_content(f"{system_prompt}\n\n{user_prompt}")
+                content = response.text
+            else:
+                response = client.chat.completions.create(
+                    model=config["llm_model"],
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    max_tokens=1500,
+                    temperature=temperature,
+                )
+                content = response.choices[0].message.content
             if content:
                 return content.strip()
             time.sleep(1)
